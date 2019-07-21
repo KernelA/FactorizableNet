@@ -207,8 +207,10 @@ def main():
             os.path.join(options['logs']['dir_logs'], args.resume))
     else:
         if os.path.isdir(options['logs']['dir_logs']):
+            print('Logs directory already exists in {}. Erase?'
+                .format(options['logs']['dir_logs']))
             if click.confirm('Logs directory already exists in {}. Erase?'
-                .format(options['logs']['dir_logs'], default=False)):
+                .format(options['logs']['dir_logs']), default=False):
                 os.system('rm -r ' + options['logs']['dir_logs'])
             else:
                 return
