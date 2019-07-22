@@ -102,6 +102,7 @@ best_recall_pred = [0., 0.]
 
 
 def main():
+    print('test')
     global args, is_best, best_recall, best_recall_pred, best_recall_phrase
     # To set the model name automatically
 
