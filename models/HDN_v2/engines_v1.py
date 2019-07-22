@@ -106,6 +106,7 @@ def train(loader, model, optimizer, exp_logger, epoch, train_all, print_freq=100
 def test(loader, model, top_Ns, nms=-1., triplet_nms=-1., use_gt_boxes=False):
 
     print '========== Testing ======='
+    print "testtttttttt"
     model.eval()
 
     rel_cnt = 0.
