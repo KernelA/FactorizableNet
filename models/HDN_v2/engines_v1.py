@@ -106,7 +106,7 @@ def train(loader, model, optimizer, exp_logger, epoch, train_all, print_freq=100
 def test(loader, model, top_Ns, nms=-1., triplet_nms=-1., use_gt_boxes=False):
 
     print '========== Testing ======='
-    print "testtttttttt"
+    
     model.eval()
 
     rel_cnt = 0.
@@ -122,6 +122,7 @@ def test(loader, model, top_Ns, nms=-1., triplet_nms=-1., use_gt_boxes=False):
 
 
     for i, sample in enumerate(loader): # (im_data, im_info, gt_objects, gt_relationships)
+        print i
         assert len(sample['visual']) == 1
         input_visual = sample['visual'][0].cuda()
         gt_objects = sample['objects']
