@@ -122,42 +122,42 @@ def test(loader, model, top_Ns, nms=-1., triplet_nms=-1., use_gt_boxes=False):
     batch_time = network.AverageMeter()
     end = time.time()
 
-    print 'before empty for loop'
+    # print 'before empty for loop'
 
-    for i, sample in enumerate(loader):
-        continue
+    # for i, sample in enumerate(loader):
+    #     continue
     
-    print 'empty for loop done'
+    # print 'empty for loop done'  # can display
 
     for i, sample in enumerate(loader): # (im_data, im_info, gt_objects, gt_relationships)
         print i
-        assert len(sample['visual']) == 1
-        input_visual = sample['visual'][0].cuda()
-        gt_objects = sample['objects']
-        gt_relationships = sample['relations']
-        image_info = sample['image_info']
-        # Forward pass
-        total_cnt_t, cnt_correct_t, eval_result_t = model.module.evaluate(
-            input_visual, image_info, gt_objects, gt_relationships,
-            top_Ns = top_Ns, nms=nms, triplet_nms=triplet_nms,
-            use_gt_boxes=use_gt_boxes)
-        eval_result_t['path'] = sample['path'][0] # for visualization
-        rel_cnt += total_cnt_t
-        result.append(eval_result_t)
-        rel_cnt_correct += cnt_correct_t[0]
-        phrase_cnt_correct += cnt_correct_t[1]
-        pred_cnt_correct += cnt_correct_t[2]
-        total_region_rois_num += cnt_correct_t[3]
-        max_region_rois_num = cnt_correct_t[3] if cnt_correct_t[3] > max_region_rois_num else max_region_rois_num
-        batch_time.update(time.time() - end)
-        end = time.time()
-        if (i + 1) % 500 == 0 and i > 0:
-            print('[Evaluation][%d/%d][%.2fs/img][avg: %d subgraphs, max: %d subgraphs]' %(i+1, len(loader), batch_time.avg, total_region_rois_num / float(i+1), max_region_rois_num))
-            for idx, top_N in enumerate(top_Ns):
-                print('\tTop-%d Recall:\t[Pred] %2.3f%%\t[Phr] %2.3f%%\t[Rel] %2.3f%%' % (
-                    top_N, pred_cnt_correct[idx] / float(rel_cnt) * 100,
-                    phrase_cnt_correct[idx] / float(rel_cnt) * 100,
-                    rel_cnt_correct[idx] / float(rel_cnt) * 100))
+        # assert len(sample['visual']) == 1
+        # input_visual = sample['visual'][0].cuda()
+        # gt_objects = sample['objects']
+        # gt_relationships = sample['relations']
+        # image_info = sample['image_info']
+        # # Forward pass
+        # total_cnt_t, cnt_correct_t, eval_result_t = model.module.evaluate(
+        #     input_visual, image_info, gt_objects, gt_relationships,
+        #     top_Ns = top_Ns, nms=nms, triplet_nms=triplet_nms,
+        #     use_gt_boxes=use_gt_boxes)
+        # eval_result_t['path'] = sample['path'][0] # for visualization
+        # rel_cnt += total_cnt_t
+        # result.append(eval_result_t)
+        # rel_cnt_correct += cnt_correct_t[0]
+        # phrase_cnt_correct += cnt_correct_t[1]
+        # pred_cnt_correct += cnt_correct_t[2]
+        # total_region_rois_num += cnt_correct_t[3]
+        # max_region_rois_num = cnt_correct_t[3] if cnt_correct_t[3] > max_region_rois_num else max_region_rois_num
+        # batch_time.update(time.time() - end)
+        # end = time.time()
+        # if (i + 1) % 500 == 0 and i > 0:
+        #     print('[Evaluation][%d/%d][%.2fs/img][avg: %d subgraphs, max: %d subgraphs]' %(i+1, len(loader), batch_time.avg, total_region_rois_num / float(i+1), max_region_rois_num))
+        #     for idx, top_N in enumerate(top_Ns):
+        #         print('\tTop-%d Recall:\t[Pred] %2.3f%%\t[Phr] %2.3f%%\t[Rel] %2.3f%%' % (
+        #             top_N, pred_cnt_correct[idx] / float(rel_cnt) * 100,
+        #             phrase_cnt_correct[idx] / float(rel_cnt) * 100,
+        #             rel_cnt_correct[idx] / float(rel_cnt) * 100))
 
     recall = [rel_cnt_correct / float(rel_cnt),
               phrase_cnt_correct / float(rel_cnt),
