@@ -272,46 +272,46 @@ class Factorizable_network(nn.Module):
         thr=0.5, nms=-1., triplet_nms=-1., top_Ns = [100],
         use_gt_boxes=False):
         print 'hello'
-        gt_objects = gt_objects[0]
-        gt_relationships = gt_relationships[0]
-        if use_gt_boxes:
-            object_result, predicate_result = self.forward_eval(im_data, im_info,
-                            gt_objects=gt_objects)
-        else:
-            object_result, predicate_result = self.forward_eval(im_data, im_info,)
+        # gt_objects = gt_objects[0]
+        # gt_relationships = gt_relationships[0]
+        # if use_gt_boxes:
+        #     object_result, predicate_result = self.forward_eval(im_data, im_info,
+        #                     gt_objects=gt_objects)
+        # else:
+        #     object_result, predicate_result = self.forward_eval(im_data, im_info,)
 
-        cls_prob_object, bbox_object, object_rois, reranked_score = object_result[:4]
-        cls_prob_predicate, mat_phrase = predicate_result[:2]
-        region_rois_num = predicate_result[2]
+        # cls_prob_object, bbox_object, object_rois, reranked_score = object_result[:4]
+        # cls_prob_predicate, mat_phrase = predicate_result[:2]
+        # region_rois_num = predicate_result[2]
 
-        # interpret the model output
-        obj_boxes, obj_scores, obj_cls, subject_inds, object_inds, \
-            subject_boxes, object_boxes, predicate_inds, \
-            sub_assignment, obj_assignment, total_score = \
-                interpret_relationships(cls_prob_object, bbox_object, object_rois,
-                            cls_prob_predicate, mat_phrase, im_info,
-                            nms=nms, top_N=max(top_Ns),
-                            use_gt_boxes=use_gt_boxes,
-                            triplet_nms=triplet_nms,
-                            reranked_score=reranked_score)
+        # # interpret the model output
+        # obj_boxes, obj_scores, obj_cls, subject_inds, object_inds, \
+        #     subject_boxes, object_boxes, predicate_inds, \
+        #     sub_assignment, obj_assignment, total_score = \
+        #         interpret_relationships(cls_prob_object, bbox_object, object_rois,
+        #                     cls_prob_predicate, mat_phrase, im_info,
+        #                     nms=nms, top_N=max(top_Ns),
+        #                     use_gt_boxes=use_gt_boxes,
+        #                     triplet_nms=triplet_nms,
+        #                     reranked_score=reranked_score)
 
-        gt_objects[:, :4] /= im_info[0][2]
-        rel_cnt, rel_correct_cnt, pred_correct_cnt = check_relationship_recall(gt_objects, gt_relationships,
-                                        subject_inds, object_inds, predicate_inds,
-                                        subject_boxes, object_boxes, top_Ns, thres=thr)
-        _, phrase_correct_cnt = check_phrase_recall(gt_objects, gt_relationships,
-                                        subject_inds, object_inds, predicate_inds,
-                                        subject_boxes, object_boxes, top_Ns, thres=thr)
+        # gt_objects[:, :4] /= im_info[0][2]
+        # rel_cnt, rel_correct_cnt, pred_correct_cnt = check_relationship_recall(gt_objects, gt_relationships,
+        #                                 subject_inds, object_inds, predicate_inds,
+        #                                 subject_boxes, object_boxes, top_Ns, thres=thr)
+        # _, phrase_correct_cnt = check_phrase_recall(gt_objects, gt_relationships,
+        #                                 subject_inds, object_inds, predicate_inds,
+        #                                 subject_boxes, object_boxes, top_Ns, thres=thr)
 
-        result = {'objects': {
-                            'bbox': obj_boxes,
-                            'scores': obj_scores,
-                            'class': obj_cls,},
-                  'relationships': zip(sub_assignment, obj_assignment, predicate_inds, total_score),
-                  'rel_recall': [float(v) / rel_cnt for v in rel_correct_cnt], 
-                  'phr_recall': [float(v) / rel_cnt for v in phrase_correct_cnt], 
-                  'pred_recall': [float(v) / rel_cnt for v in pred_correct_cnt],
-                 }
+        # result = {'objects': {
+        #                     'bbox': obj_boxes,
+        #                     'scores': obj_scores,
+        #                     'class': obj_cls,},
+        #           'relationships': zip(sub_assignment, obj_assignment, predicate_inds, total_score),
+        #           'rel_recall': [float(v) / rel_cnt for v in rel_correct_cnt], 
+        #           'phr_recall': [float(v) / rel_cnt for v in phrase_correct_cnt], 
+        #           'pred_recall': [float(v) / rel_cnt for v in pred_correct_cnt],
+        #          }
 
 
         return rel_cnt, (rel_correct_cnt, phrase_correct_cnt, pred_correct_cnt, region_rois_num), result
