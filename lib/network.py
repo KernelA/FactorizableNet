@@ -113,7 +113,7 @@ def set_trainable_param(parameters, requires_grad):
 def weight_init_fun_kaiming(m):
     classname = m.__class__.__name__
     if isinstance(m, nn.Linear) or isinstance(m, nn.Conv2d):
-        nn.init.kaiming_uniform(m.weight.data, mode='fan_in')
+        nn.init.kaiming_uniform_(m.weight.data, mode='fan_in')
         m.bias.data.fill_(0.)
     elif classname.find('BatchNorm') != -1:
         m.weight.data.normal_(1.0, 0.02)
