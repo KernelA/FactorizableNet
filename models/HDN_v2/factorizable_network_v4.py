@@ -272,13 +272,13 @@ class Factorizable_network(nn.Module):
         thr=0.5, nms=-1., triplet_nms=-1., top_Ns = [100],
         use_gt_boxes=False):
         print 'hello'
-        # gt_objects = gt_objects[0]
-        # gt_relationships = gt_relationships[0]
-        # if use_gt_boxes:
-        #     object_result, predicate_result = self.forward_eval(im_data, im_info,
-        #                     gt_objects=gt_objects)
-        # else:
-        #     object_result, predicate_result = self.forward_eval(im_data, im_info,)
+        gt_objects = gt_objects[0]
+        gt_relationships = gt_relationships[0]
+        if use_gt_boxes:
+            object_result, predicate_result = self.forward_eval(im_data, im_info,
+                            gt_objects=gt_objects)
+        else:
+            object_result, predicate_result = self.forward_eval(im_data, im_info,)
 
         # cls_prob_object, bbox_object, object_rois, reranked_score = object_result[:4]
         # cls_prob_predicate, mat_phrase = predicate_result[:2]
