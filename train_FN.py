@@ -277,7 +277,7 @@ def main():
                     step_size=options['optim']['lr_decay_epoch'],
                     gamma=options['optim']['lr_decay'])
     # Setting the state of the training model
-    # model = DataParallel(model)
+    model = DataParallel(model)
     model.cuda()
     model.train()
 
