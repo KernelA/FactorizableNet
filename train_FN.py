@@ -11,6 +11,8 @@ import click
 from pprint import pprint
 # To restore the testing results for further analysis
 import cPickle
+import sys
+sys.stdout.flush()
 
 
 import torch
