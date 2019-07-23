@@ -162,7 +162,7 @@ def main():
                                 use_region=options['data'].get('use_region', False))
 
     
-    print("#################### MY DEBUG SECTION ####################")
+    print("#################### MY DEBUG SECTION start ####################")
     print('len of test_set: '+str(len(test_set)))
 
     print("\ntraverse test_set start")
@@ -176,7 +176,7 @@ def main():
     pprint(data_opts)
     print("dataset_option = "+str(options['data'].get('dataset_option', None)))
     print("use_region = "+str(options['data'].get('use_region', False)))
-    print("#################### MY DEBUG SECTION ####################")
+    print("#################### MY DEBUG SECTION  end  ####################")
 
     print("Done")
 
@@ -197,7 +197,12 @@ def main():
                                                 shuffle=False, num_workers=args.workers,
                                                 pin_memory=True,
                                                 collate_fn=getattr(datasets, options['data']['dataset']).collate)
-
+    
+    print("#################### MY DEBUG SECTION start ####################")
+    for i, batch in enumerate(test_loader):
+        continue
+    print('enumerate test_loader done')
+    print("#################### MY DEBUG SECTION  end  ####################")
 
     ## For debug
     # params = list(net.parameters())
