@@ -200,11 +200,11 @@ def main():
                                                 pin_memory=True,
                                                 collate_fn=getattr(datasets, options['data']['dataset']).collate)
     
-    print("#################### MY DEBUG SECTION start ####################")
-    for i, batch in enumerate(test_loader):
-        continue
-    print('enumerate test_loader done')
-    print("#################### MY DEBUG SECTION  end  ####################")
+    # print("#################### MY DEBUG SECTION start ####################")
+    # for i, batch in enumerate(test_loader):
+    #     continue
+    # print('enumerate test_loader done')
+    # print("#################### MY DEBUG SECTION  end  ####################")
 
     ## For debug
     # params = list(net.parameters())
