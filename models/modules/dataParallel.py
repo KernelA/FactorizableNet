@@ -37,6 +37,7 @@ class DataParallel(DataParallel_raw):
         return self.gather(outputs, self.output_device)
     
     def forward_eval(self, *inputs, **kwargs):
+        print 'dataParallel forward_eval hello'
         assert len(inputs) == 0, "Only support arguments like [variable_name = xxx]"
         new_inputs = [{} for _ in self.device_ids]
         for key in kwargs:
