@@ -148,9 +148,9 @@ class Factorizable_network(FN_v4):
         pooled_region_features = self.fc_region(pooled_region_features)
         bbox_object = self.bbox_obj(F.relu(pooled_object_features))
 
-        # for i, mps in enumerate(self.mps_list):
-        #     pooled_object_features, pooled_region_features = \
-        #         mps(pooled_object_features, pooled_region_features, mat_object, mat_region, object_rois, region_rois)
+        for i, mps in enumerate(self.mps_list):
+            pooled_object_features, pooled_region_features = \
+                mps(pooled_object_features, pooled_region_features, mat_object, mat_region, object_rois, region_rois)
 
         # pooled_phrase_features = self.phrase_inference(pooled_object_features, pooled_region_features, mat_phrase)
         # pooled_object_features = F.relu(pooled_object_features)
