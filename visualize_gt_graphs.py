@@ -60,7 +60,7 @@ def visualize():
 
     print('Loading dataset...'),
     with open(args.path_data_opts, 'r') as handle:
-        options = yaml.load(handle)
+        options = yaml.load(handle, Loader=yaml.FullLoader)
     test_set = getattr(datasets, args.dataset)(options, 'test',
                              dataset_option=args.dataset_option,
                              use_region=True)
