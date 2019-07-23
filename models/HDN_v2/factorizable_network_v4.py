@@ -228,45 +228,47 @@ class Factorizable_network(nn.Module):
         return losses
 
     def forward_eval(self, im_data, im_info, gt_objects=None):
-        # Currently, RPN support batch but not for MSDN
-        features, object_rois, _ = self.rpn(im_data, im_info)
-        if gt_objects is not None:
-            gt_rois = np.concatenate([np.zeros((gt_objects.shape[0], 1)),
-                                      gt_objects[:, :4],
-                                      np.ones((gt_objects.shape[0], 1))], 1)
-        else:
-            gt_rois = None
-        object_rois, region_rois, mat_object, mat_phrase, mat_region = self.graph_construction(object_rois, gt_rois=gt_rois)
-        # roi pool
-        pooled_object_features = self.roi_pool_object(features, object_rois).view(len(object_rois), -1)
-        pooled_object_features = self.fc_obj(pooled_object_features)
-        pooled_region_features = self.roi_pool_region(features, region_rois)
-        pooled_region_features = self.fc_region(pooled_region_features)
-        bbox_object = self.bbox_obj(F.relu(pooled_object_features))
+        print 'forward_eval(), hello'
+        return 1, 1
+        # # Currently, RPN support batch but not for MSDN
+        # features, object_rois, _ = self.rpn(im_data, im_info)
+        # if gt_objects is not None:
+        #     gt_rois = np.concatenate([np.zeros((gt_objects.shape[0], 1)),
+        #                               gt_objects[:, :4],
+        #                               np.ones((gt_objects.shape[0], 1))], 1)
+        # else:
+        #     gt_rois = None
+        # object_rois, region_rois, mat_object, mat_phrase, mat_region = self.graph_construction(object_rois, gt_rois=gt_rois)
+        # # roi pool
+        # pooled_object_features = self.roi_pool_object(features, object_rois).view(len(object_rois), -1)
+        # pooled_object_features = self.fc_obj(pooled_object_features)
+        # pooled_region_features = self.roi_pool_region(features, region_rois)
+        # pooled_region_features = self.fc_region(pooled_region_features)
+        # bbox_object = self.bbox_obj(F.relu(pooled_object_features))
 
-        for i, mps in enumerate(self.mps_list):
-            pooled_object_features, pooled_region_features = \
-                mps(pooled_object_features, pooled_region_features, mat_object, mat_region)
+        # for i, mps in enumerate(self.mps_list):
+        #     pooled_object_features, pooled_region_features = \
+        #         mps(pooled_object_features, pooled_region_features, mat_object, mat_region)
 
-        pooled_phrase_features = self.phrase_inference(pooled_object_features, pooled_region_features, mat_phrase)
-        pooled_object_features = F.relu(pooled_object_features)
-        pooled_phrase_features = F.relu(pooled_phrase_features)
+        # pooled_phrase_features = self.phrase_inference(pooled_object_features, pooled_region_features, mat_phrase)
+        # pooled_object_features = F.relu(pooled_object_features)
+        # pooled_phrase_features = F.relu(pooled_phrase_features)
 
-        cls_score_object = self.score_obj(pooled_object_features)
-        cls_prob_object = F.softmax(cls_score_object, dim=1)
-        cls_score_predicate = self.score_pred(pooled_phrase_features)
-        cls_prob_predicate = F.softmax(cls_score_predicate, dim=1)
-
-
-        if self.learnable_nms:
-            selected_prob, _ = cls_prob_object[:, 1:].max(dim=1, keepdim=False)
-            reranked_score = self.nms(pooled_object_features, selected_prob, object_rois)
-        else:
-            reranked_score = None
+        # cls_score_object = self.score_obj(pooled_object_features)
+        # cls_prob_object = F.softmax(cls_score_object, dim=1)
+        # cls_score_predicate = self.score_pred(pooled_phrase_features)
+        # cls_prob_predicate = F.softmax(cls_score_predicate, dim=1)
 
 
-        return (cls_prob_object, bbox_object, object_rois, reranked_score), \
-                (cls_prob_predicate, mat_phrase, region_rois.size(0)),
+        # if self.learnable_nms:
+        #     selected_prob, _ = cls_prob_object[:, 1:].max(dim=1, keepdim=False)
+        #     reranked_score = self.nms(pooled_object_features, selected_prob, object_rois)
+        # else:
+        #     reranked_score = None
+
+
+        # return (cls_prob_object, bbox_object, object_rois, reranked_score), \
+        #         (cls_prob_predicate, mat_phrase, region_rois.size(0)),
 
     def evaluate(self, im_data, im_info, gt_objects, gt_relationships,
         thr=0.5, nms=-1., triplet_nms=-1., top_Ns = [100],
@@ -274,11 +276,11 @@ class Factorizable_network(nn.Module):
         print 'hello'
         gt_objects = gt_objects[0]
         gt_relationships = gt_relationships[0]
-        # if use_gt_boxes:
-        #     object_result, predicate_result = self.forward_eval(im_data, im_info,
-        #                     gt_objects=gt_objects)
-        # else:
-        #     object_result, predicate_result = self.forward_eval(im_data, im_info,)
+        if use_gt_boxes:
+            object_result, predicate_result = self.forward_eval(im_data, im_info,
+                            gt_objects=gt_objects)
+        else:
+            object_result, predicate_result = self.forward_eval(im_data, im_info,)
 
         # cls_prob_object, bbox_object, object_rois, reranked_score = object_result[:4]
         # cls_prob_predicate, mat_phrase = predicate_result[:2]
