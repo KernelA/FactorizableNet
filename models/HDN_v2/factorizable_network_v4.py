@@ -271,6 +271,7 @@ class Factorizable_network(nn.Module):
     def evaluate(self, im_data, im_info, gt_objects, gt_relationships,
         thr=0.5, nms=-1., triplet_nms=-1., top_Ns = [100],
         use_gt_boxes=False):
+        print 'hello'
         gt_objects = gt_objects[0]
         gt_relationships = gt_relationships[0]
         if use_gt_boxes:
