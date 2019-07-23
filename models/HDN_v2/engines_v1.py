@@ -130,10 +130,9 @@ def test(loader, model, top_Ns, nms=-1., triplet_nms=-1., use_gt_boxes=False):
     # print 'empty for loop done'  # can display
 
     for i, sample in enumerate(loader): # (im_data, im_info, gt_objects, gt_relationships)
-        # print i
-        print len(sample['visual'])
-        # assert len(sample['visual']) == 1
-        # input_visual = sample['visual'][0].cuda()
+        print i
+        assert len(sample['visual']) == 1
+        input_visual = sample['visual'][0].cuda()
         # gt_objects = sample['objects']
         # gt_relationships = sample['relations']
         # image_info = sample['image_info']
