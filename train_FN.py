@@ -160,7 +160,23 @@ def main():
     test_set = getattr(datasets, options['data']['dataset'])(data_opts, 'test',
                                 dataset_option=options['data'].get('dataset_option', None),
                                 use_region=options['data'].get('use_region', False))
-    print('len of test_set', len(test_set))
+
+    
+    print("#################### MY DEBUG SECTION ####################")
+    print('len of test_set: '+str(len(test_set)))
+
+    print("\ntraverse test_set start")
+    for i in range(len(test_set)):
+        test_set[i]
+    print("traverse test_set done")
+    
+    print("options['data']['dataset'] "+options['data']['dataset'])
+    print("data_opts")
+    pprint(data_opts)
+    print("dataset_option = "+options['data'].get('dataset_option', None))
+    print("use_region = "+options['data'].get('use_region', False))
+    print("#################### MY DEBUG SECTION ####################")
+
     print("Done")
 
     # Model declaration
