@@ -152,6 +152,8 @@ class Factorizable_network(FN_v4):
             pooled_object_features, pooled_region_features = \
                 mps(pooled_object_features, pooled_region_features, mat_object, mat_region, object_rois, region_rois)
 
+        print 'donedonedonedonedonedonedonedonedonedonedonedone'
+
         # pooled_phrase_features = self.phrase_inference(pooled_object_features, pooled_region_features, mat_phrase)
         # pooled_object_features = F.relu(pooled_object_features)
         # pooled_phrase_features = F.relu(pooled_phrase_features)
