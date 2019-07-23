@@ -163,19 +163,19 @@ def main():
 
     
     print("#################### MY DEBUG SECTION ####################")
-    # print('len of test_set: '+str(len(test_set)))
+    print('len of test_set: '+str(len(test_set)))
 
-    # print("\ntraverse test_set start")
-    # for i in range(len(test_set)):
-    #     test_set[i]
-    #     print(i)
-    # print("traverse test_set done")
+    print("\ntraverse test_set start")
+    for i in range(len(test_set)):
+        test_set[i]
+        print(i)
+    print("traverse test_set done")
     
-    # print("options['data']['dataset'] "+options['data']['dataset'])
-    # print("data_opts")
-    # pprint(data_opts)
-    # print("dataset_option = "+options['data'].get('dataset_option', None))
-    # print("use_region = "+options['data'].get('use_region', False))
+    print("options['data']['dataset'] "+options['data']['dataset'])
+    print("data_opts")
+    pprint(data_opts)
+    print("dataset_option = "+options['data'].get('dataset_option', None))
+    print("use_region = "+options['data'].get('use_region', False))
     print("#################### MY DEBUG SECTION ####################")
 
     print("Done")
