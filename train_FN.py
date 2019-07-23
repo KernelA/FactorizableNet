@@ -170,7 +170,7 @@ def main():
     print("\ntraverse test_set start")
     for i in range(len(test_set)):
         test_set[i]
-        print(i)
+        # print(i)
     print("traverse test_set done")
     
     print("options['data']['dataset'] "+options['data']['dataset'])
