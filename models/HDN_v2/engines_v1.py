@@ -122,7 +122,12 @@ def test(loader, model, top_Ns, nms=-1., triplet_nms=-1., use_gt_boxes=False):
     batch_time = network.AverageMeter()
     end = time.time()
 
-    print 'before for loop'
+    print 'before empty for loop'
+
+    for i, sample in enumerate(loader):
+        continue
+    
+    print 'empty for loop done'
 
     for i, sample in enumerate(loader): # (im_data, im_info, gt_objects, gt_relationships)
         print i
