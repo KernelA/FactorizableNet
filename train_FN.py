@@ -160,6 +160,7 @@ def main():
     test_set = getattr(datasets, options['data']['dataset'])(data_opts, 'test',
                                 dataset_option=options['data'].get('dataset_option', None),
                                 use_region=options['data'].get('use_region', False))
+    print('len of test_set', len(test_set))
     print("Done")
 
     # Model declaration
