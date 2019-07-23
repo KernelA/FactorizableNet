@@ -141,12 +141,12 @@ class Factorizable_network(FN_v4):
         else:
             gt_rois = None
         object_rois, region_rois, mat_object, mat_phrase, mat_region = self.graph_construction(object_rois, gt_rois=gt_rois)
-        # # roi pool
-        # pooled_object_features = self.roi_pool_object(features, object_rois).view(len(object_rois), -1)
-        # pooled_object_features = self.fc_obj(pooled_object_features)
-        # pooled_region_features = self.roi_pool_region(features, region_rois)
-        # pooled_region_features = self.fc_region(pooled_region_features)
-        # bbox_object = self.bbox_obj(F.relu(pooled_object_features))
+        # roi pool
+        pooled_object_features = self.roi_pool_object(features, object_rois).view(len(object_rois), -1)
+        pooled_object_features = self.fc_obj(pooled_object_features)
+        pooled_region_features = self.roi_pool_region(features, region_rois)
+        pooled_region_features = self.fc_region(pooled_region_features)
+        bbox_object = self.bbox_obj(F.relu(pooled_object_features))
 
         # for i, mps in enumerate(self.mps_list):
         #     pooled_object_features, pooled_region_features = \
