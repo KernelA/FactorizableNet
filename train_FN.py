@@ -174,8 +174,8 @@ def main():
     print("options['data']['dataset'] "+options['data']['dataset'])
     print("data_opts")
     pprint(data_opts)
-    print("dataset_option = "+options['data'].get('dataset_option', None))
-    print("use_region = "+options['data'].get('use_region', False))
+    print("dataset_option = "+str(options['data'].get('dataset_option', None)))
+    print("use_region = "+str(options['data'].get('use_region', False)))
     print("#################### MY DEBUG SECTION ####################")
 
     print("Done")
