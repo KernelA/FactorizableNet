@@ -277,7 +277,7 @@ class Factorizable_network(nn.Module):
         gt_objects = gt_objects[0]
         gt_relationships = gt_relationships[0]
         print(type(im_data), type(im_info))
-        # self.forward_eval(im_data, im_info,)
+        self.forward_eval(im_data, im_info,)
         # if use_gt_boxes:
         #     object_result, predicate_result = self.forward_eval(im_data, im_info,
         #                     gt_objects=gt_objects)
