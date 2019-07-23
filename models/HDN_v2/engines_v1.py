@@ -137,10 +137,10 @@ def test(loader, model, top_Ns, nms=-1., triplet_nms=-1., use_gt_boxes=False):
         gt_relationships = sample['relations']
         image_info = sample['image_info']
         # Forward pass
-        # total_cnt_t, cnt_correct_t, eval_result_t = model.module.evaluate(
-        #     input_visual, image_info, gt_objects, gt_relationships,
-        #     top_Ns = top_Ns, nms=nms, triplet_nms=triplet_nms,
-        #     use_gt_boxes=use_gt_boxes)
+        total_cnt_t, cnt_correct_t, eval_result_t = model.module.evaluate(
+            input_visual, image_info, gt_objects, gt_relationships,
+            top_Ns = top_Ns, nms=nms, triplet_nms=triplet_nms,
+            use_gt_boxes=use_gt_boxes)
         # eval_result_t['path'] = sample['path'][0] # for visualization
         # rel_cnt += total_cnt_t
         # result.append(eval_result_t)
