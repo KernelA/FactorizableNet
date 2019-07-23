@@ -131,6 +131,7 @@ class Factorizable_network(FN_v4):
         return losses
 
     def forward_eval(self, im_data, im_info, gt_objects=None):
+        print 'hello from fn_v4s forward_eval()'
         # Currently, RPN support batch but not for MSDN
         features, object_rois, _ = self.rpn(im_data, im_info)
         if gt_objects is not None:
