@@ -56,7 +56,7 @@ class VRD(data.Dataset):
         self._rpn_opts = None
 
     def __getitem__(self, index):
-        print 'VRD dataset __getitem__ test'
+        print("VRD dataset getitem test")
         # Sample random scales to use for each image in this batch
         item = {'rpn_targets': {}}
 
