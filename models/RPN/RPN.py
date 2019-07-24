@@ -34,6 +34,7 @@ class RPN(nn.Module):
     anchor_ratios_normal_region = [0.25, 0.5, 1, 2, 4]
 
     def __init__(self, opts):
+        print 'hello from RPN.py init()'
         super(RPN, self).__init__()
 
         # loading RPN configs
@@ -90,6 +91,7 @@ class RPN(nn.Module):
     #     return self.loss_cls + self.loss_box * 0.2
 
     def forward(self, im_data, im_info, gt_objects=None, dontcare_areas=None, rpn_data=None):
+        print 'hello from RPN.py forward'
 
         features = self.features(im_data)
         # print 'features.std()', features.data.std()
