@@ -122,7 +122,7 @@ class RPN(nn.Module):
                                    self._feat_stride, self.opts['object'][cfg_key],
                                    self.opts['object']['anchor_scales'],
                                    self.opts['object']['anchor_ratios'],
-                                   mappings=self.opts['mappings'])
+                                   self.opts['mappings'])
 
         print 'parameters no problem'
 
