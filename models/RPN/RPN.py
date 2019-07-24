@@ -18,6 +18,7 @@ import math
 import json
 import yaml
 import pdb
+import pickle
 
 from .utils import nms_detections, build_loss, reshape_layer, generate_output_mapping
 
@@ -124,6 +125,10 @@ class RPN(nn.Module):
                                    self.opts['object']['anchor_ratios'],
                                    self.opts['mappings'])
 
+        f = open('/home/kangliwei/test/RPN_proposal_layer_parameters.pkl', 'w')
+        pickle.dump(a, f)
+        f.close()
+
         print 'parameters no problem'
 
         # rois = self.proposal_layer(rpn_cls_prob_reshape, rpn_bbox_pred, im_info,
@@ -159,4 +164,4 @@ class RPN(nn.Module):
         # x = proposal_layer_py(rpn_cls_prob_reshape, rpn_bbox_pred, im_info,
         #             _feat_stride, opts, anchor_scales, anchor_ratios, mappings)
         # x = network.np_to_variable(x, is_cuda=True)
-        return x.view(-1, 6)
+        # return x.view(-1, 6)
