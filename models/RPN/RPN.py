@@ -112,13 +112,12 @@ class RPN(nn.Module):
 
         # proposal layer
         cfg_key = 'train' if self.training else 'test'
-        rois = self.proposal_layer(rpn_cls_prob_reshape, rpn_bbox_pred, im_info,
-                                   self._feat_stride, self.opts['object'][cfg_key],
-                                   self.opts['object']['anchor_scales'],
-                                   self.opts['object']['anchor_ratios'],
-                                   mappings=self.opts['mappings'])
-
-        print 'done till #120 in RPN.py'
+        print 'done till #114 in RPN.py'
+        # rois = self.proposal_layer(rpn_cls_prob_reshape, rpn_bbox_pred, im_info,
+        #                            self._feat_stride, self.opts['object'][cfg_key],
+        #                            self.opts['object']['anchor_scales'],
+        #                            self.opts['object']['anchor_ratios'],
+        #                            mappings=self.opts['mappings'])
 
         # # generating training labels and build the rpn loss
         # losses = {}
