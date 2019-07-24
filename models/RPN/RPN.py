@@ -125,17 +125,17 @@ class RPN(nn.Module):
                                    self.opts['object']['anchor_ratios'],
                                    self.opts['mappings'])
 
-        f = open('/home/kangliwei/test/RPN_proposal_layer_parameters.pkl', 'w')
+        f = open('/home/kangliwei/test/RPN_proposal_layer_parameters.pkl', 'wb')
         pickle.dump(a, f)
         f.close()
 
         print 'parameters no problem'
 
-        # rois = self.proposal_layer(rpn_cls_prob_reshape, rpn_bbox_pred, im_info,
-        #                            self._feat_stride, self.opts['object'][cfg_key],
-        #                            self.opts['object']['anchor_scales'],
-        #                            self.opts['object']['anchor_ratios'],
-        #                            mappings=self.opts['mappings'])
+        rois = self.proposal_layer(rpn_cls_prob_reshape, rpn_bbox_pred, im_info,
+                                   self._feat_stride, self.opts['object'][cfg_key],
+                                   self.opts['object']['anchor_scales'],
+                                   self.opts['object']['anchor_ratios'],
+                                   mappings=self.opts['mappings'])
 
         # # generating training labels and build the rpn loss
         # losses = {}
