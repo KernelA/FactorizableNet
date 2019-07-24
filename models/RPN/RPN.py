@@ -93,44 +93,44 @@ class RPN(nn.Module):
     def forward(self, im_data, im_info, gt_objects=None, dontcare_areas=None, rpn_data=None):
         print 'hello from RPN.py forward'
 
-        features = self.features(im_data)
-        # print 'features.std()', features.data.std()
-        rpn_conv1 = self.conv1(features)
-        # print 'rpn_conv1.std()', rpn_conv1.data.std()
-        # object proposal score
-        rpn_cls_score = self.score_conv(rpn_conv1)
-        # print 'rpn_cls_score.std()', rpn_cls_score.data.std()
-        rpn_cls_score_reshape = reshape_layer(rpn_cls_score, 2)
-        rpn_cls_prob = F.softmax(rpn_cls_score_reshape, dim=1)
-        rpn_cls_prob_reshape = reshape_layer(rpn_cls_prob, self.anchor_num*2)
-        # rpn boxes
-        rpn_bbox_pred = self.bbox_conv(rpn_conv1)
-        # print 'rpn_bbox_pred.std()', rpn_bbox_pred.data.std() * 4
+        # features = self.features(im_data)
+        # # print 'features.std()', features.data.std()
+        # rpn_conv1 = self.conv1(features)
+        # # print 'rpn_conv1.std()', rpn_conv1.data.std()
+        # # object proposal score
+        # rpn_cls_score = self.score_conv(rpn_conv1)
+        # # print 'rpn_cls_score.std()', rpn_cls_score.data.std()
+        # rpn_cls_score_reshape = reshape_layer(rpn_cls_score, 2)
+        # rpn_cls_prob = F.softmax(rpn_cls_score_reshape, dim=1)
+        # rpn_cls_prob_reshape = reshape_layer(rpn_cls_prob, self.anchor_num*2)
+        # # rpn boxes
+        # rpn_bbox_pred = self.bbox_conv(rpn_conv1)
+        # # print 'rpn_bbox_pred.std()', rpn_bbox_pred.data.std() * 4
 
 
-        # proposal layer
-        cfg_key = 'train' if self.training else 'test'
-        rois = self.proposal_layer(rpn_cls_prob_reshape, rpn_bbox_pred, im_info,
-                                   self._feat_stride, self.opts['object'][cfg_key],
-                                   self.opts['object']['anchor_scales'],
-                                   self.opts['object']['anchor_ratios'],
-                                   mappings=self.opts['mappings'])
+        # # proposal layer
+        # cfg_key = 'train' if self.training else 'test'
+        # rois = self.proposal_layer(rpn_cls_prob_reshape, rpn_bbox_pred, im_info,
+        #                            self._feat_stride, self.opts['object'][cfg_key],
+        #                            self.opts['object']['anchor_scales'],
+        #                            self.opts['object']['anchor_ratios'],
+        #                            mappings=self.opts['mappings'])
 
-        # generating training labels and build the rpn loss
-        losses = {}
-        if self.training and rpn_data is not None:
-            loss_cls, loss_box, accs = build_loss(rpn_cls_score_reshape, rpn_bbox_pred, rpn_data)
-            tp, tf, fg_cnt, bg_cnt = accs
-            losses = {
-                'loss_cls': loss_cls,
-                'loss_box': loss_box,
-                'loss': loss_cls + loss_box * 0.2,
-                'tp': tp,
-                'tf': tf,
-                'fg_cnt': fg_cnt,
-                'bg_cnt': bg_cnt,
+        # # generating training labels and build the rpn loss
+        # losses = {}
+        # if self.training and rpn_data is not None:
+        #     loss_cls, loss_box, accs = build_loss(rpn_cls_score_reshape, rpn_bbox_pred, rpn_data)
+        #     tp, tf, fg_cnt, bg_cnt = accs
+        #     losses = {
+        #         'loss_cls': loss_cls,
+        #         'loss_box': loss_box,
+        #         'loss': loss_cls + loss_box * 0.2,
+        #         'tp': tp,
+        #         'tf': tf,
+        #         'fg_cnt': fg_cnt,
+        #         'bg_cnt': bg_cnt,
 
-            }
+        #     }
         return features, rois, losses
 
 
