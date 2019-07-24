@@ -93,19 +93,19 @@ class RPN(nn.Module):
     def forward(self, im_data, im_info, gt_objects=None, dontcare_areas=None, rpn_data=None):
         print 'hello from RPN.py forward'
 
-        # features = self.features(im_data)
-        # # print 'features.std()', features.data.std()
-        # rpn_conv1 = self.conv1(features)
-        # # print 'rpn_conv1.std()', rpn_conv1.data.std()
-        # # object proposal score
-        # rpn_cls_score = self.score_conv(rpn_conv1)
-        # # print 'rpn_cls_score.std()', rpn_cls_score.data.std()
-        # rpn_cls_score_reshape = reshape_layer(rpn_cls_score, 2)
-        # rpn_cls_prob = F.softmax(rpn_cls_score_reshape, dim=1)
-        # rpn_cls_prob_reshape = reshape_layer(rpn_cls_prob, self.anchor_num*2)
-        # # rpn boxes
-        # rpn_bbox_pred = self.bbox_conv(rpn_conv1)
-        # # print 'rpn_bbox_pred.std()', rpn_bbox_pred.data.std() * 4
+        features = self.features(im_data)
+        # print 'features.std()', features.data.std()
+        rpn_conv1 = self.conv1(features)
+        # print 'rpn_conv1.std()', rpn_conv1.data.std()
+        # object proposal score
+        rpn_cls_score = self.score_conv(rpn_conv1)
+        # print 'rpn_cls_score.std()', rpn_cls_score.data.std()
+        rpn_cls_score_reshape = reshape_layer(rpn_cls_score, 2)
+        rpn_cls_prob = F.softmax(rpn_cls_score_reshape, dim=1)
+        rpn_cls_prob_reshape = reshape_layer(rpn_cls_prob, self.anchor_num*2)
+        # rpn boxes
+        rpn_bbox_pred = self.bbox_conv(rpn_conv1)
+        # print 'rpn_bbox_pred.std()', rpn_bbox_pred.data.std() * 4
 
 
         # # proposal layer
