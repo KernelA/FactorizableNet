@@ -1,6 +1,6 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 # from ._utils import _C
-from layer_utils import _C
+# from layer_utils import _C
 
 nms = _C.nms
 # nms.__doc__ = """
