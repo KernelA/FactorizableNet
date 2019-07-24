@@ -107,16 +107,18 @@ class RPN(nn.Module):
         rpn_bbox_pred = self.bbox_conv(rpn_conv1)
         # print 'rpn_bbox_pred.std()', rpn_bbox_pred.data.std() * 4
 
-        print 'done till #108 in RPN.py'
+        print 'done till #108 in RPN.py'  # true
 
 
-        # # proposal layer
-        # cfg_key = 'train' if self.training else 'test'
-        # rois = self.proposal_layer(rpn_cls_prob_reshape, rpn_bbox_pred, im_info,
-        #                            self._feat_stride, self.opts['object'][cfg_key],
-        #                            self.opts['object']['anchor_scales'],
-        #                            self.opts['object']['anchor_ratios'],
-        #                            mappings=self.opts['mappings'])
+        # proposal layer
+        cfg_key = 'train' if self.training else 'test'
+        rois = self.proposal_layer(rpn_cls_prob_reshape, rpn_bbox_pred, im_info,
+                                   self._feat_stride, self.opts['object'][cfg_key],
+                                   self.opts['object']['anchor_scales'],
+                                   self.opts['object']['anchor_ratios'],
+                                   mappings=self.opts['mappings'])
+
+        print 'done till #120 in RPN.py'
 
         # # generating training labels and build the rpn loss
         # losses = {}
