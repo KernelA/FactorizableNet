@@ -115,8 +115,6 @@ class RPN(nn.Module):
         cfg_key = 'train' if self.training else 'test'
         print 'done till #114 in RPN.py'  # true
 
-        self.proposal_layer(None, None, None, None, None, None, None, None)
-
         print 'done till #117 in RPN.py'  # true
 
         a = (rpn_cls_prob_reshape, rpn_bbox_pred, im_info,
