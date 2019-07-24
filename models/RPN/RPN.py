@@ -116,6 +116,16 @@ class RPN(nn.Module):
 
         self.proposal_layer(None, None, None, None, None, None, None, None)
 
+        print 'done till #117 in RPN.py'  # true
+
+        a = (rpn_cls_prob_reshape, rpn_bbox_pred, im_info,
+                                   self._feat_stride, self.opts['object'][cfg_key],
+                                   self.opts['object']['anchor_scales'],
+                                   self.opts['object']['anchor_ratios'],
+                                   mappings=self.opts['mappings'])
+
+        print 'parameters no problem'
+
         # rois = self.proposal_layer(rpn_cls_prob_reshape, rpn_bbox_pred, im_info,
         #                            self._feat_stride, self.opts['object'][cfg_key],
         #                            self.opts['object']['anchor_scales'],
