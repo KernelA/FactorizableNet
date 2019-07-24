@@ -14,7 +14,8 @@ from generate_anchors import generate_anchors
 import pdb
 
 
-DEBUG = False
+# DEBUG = False
+DEBUG = True
 """
 Outputs object detection proposals by applying estimated bounding-box
 transformations to a set of regular boxes (called "anchors").
@@ -25,50 +26,52 @@ def proposal_layer(rpn_cls_prob_reshape, rpn_bbox_pred, im_infos,
                     _feat_stride, opts, anchor_scales, anchor_ratios,
                     mappings):
     print 'hello from proposal_layer.py'
-    # # Algorithm:
-    # #
-    # # for each (H, W) location i
-    # #   generate A anchor boxes centered on cell i
-    # #   apply predicted bbox deltas at cell i to each of the A anchors
-    # # clip predicted boxes to image
-    # # remove predicted boxes with either height or width < threshold
-    # # sort all (proposal, score) pairs by score from highest to lowest
-    # # take top pre_nms_topN proposals before NMS
-    # # apply NMS with threshold 0.7 to remaining proposals
-    # # take after_nms_topN proposals after NMS
-    # # return the top proposals (-> RoIs top, scores top)
-    # # layer_params = yaml.load(self.param_str_)
-    # batch_size = rpn_cls_prob_reshape.shape[0]
-    # _anchors = generate_anchors(scales=anchor_scales, ratios=anchor_ratios)
-    # _num_anchors = _anchors.shape[0]
-    # pre_nms_topN = opts['num_box_pre_NMS']
-    # post_nms_topN = opts['num_box_post_NMS']
-    # nms_thres = opts['nms_thres']
-    # min_size = opts['min_size']
+    # Algorithm:
+    #
+    # for each (H, W) location i
+    #   generate A anchor boxes centered on cell i
+    #   apply predicted bbox deltas at cell i to each of the A anchors
+    # clip predicted boxes to image
+    # remove predicted boxes with either height or width < threshold
+    # sort all (proposal, score) pairs by score from highest to lowest
+    # take top pre_nms_topN proposals before NMS
+    # apply NMS with threshold 0.7 to remaining proposals
+    # take after_nms_topN proposals after NMS
+    # return the top proposals (-> RoIs top, scores top)
+    # layer_params = yaml.load(self.param_str_)
+    batch_size = rpn_cls_prob_reshape.shape[0]
+    _anchors = generate_anchors(scales=anchor_scales, ratios=anchor_ratios)
+    _num_anchors = _anchors.shape[0]
+    pre_nms_topN = opts['num_box_pre_NMS']
+    post_nms_topN = opts['num_box_post_NMS']
+    nms_thres = opts['nms_thres']
+    min_size = opts['min_size']
 
-    # blob = []
+    blob = []
     
-    # for i in range(batch_size):
-    #     im_info = im_infos[i]
-    #     # the first set of _num_anchors channels are bg probs
-    #     # the second set are the fg probs, which we want
-    #     height = mappings[int(im_info[0])]
-    #     width = mappings[int(im_info[1])]
-    #     scores = rpn_cls_prob_reshape[i, _num_anchors:, :height, :width]
-    #     bbox_deltas = rpn_bbox_pred[i, :, :height, :width]
+    for i in range(batch_size):
+        im_info = im_infos[i]
+        # the first set of _num_anchors channels are bg probs
+        # the second set are the fg probs, which we want
+        height = mappings[int(im_info[0])]
+        width = mappings[int(im_info[1])]
+        scores = rpn_cls_prob_reshape[i, _num_anchors:, :height, :width]
+        bbox_deltas = rpn_bbox_pred[i, :, :height, :width]
 
-    #     if DEBUG:
-    #         print 'im_size: ({}, {})'.format(im_info[0], im_info[1])
-    #         print 'scale: {}'.format(im_info[2])
-    #     if DEBUG:
-    #         print 'score map size: {}'.format(scores.shape)
+        if DEBUG:
+            print 'im_size: ({}, {})'.format(im_info[0], im_info[1])
+            print 'scale: {}'.format(im_info[2])
+        if DEBUG:
+            print 'score map size: {}'.format(scores.shape)
 
-    #     # Enumerate all shifts
-    #     shift_x = np.arange(0, width) * _feat_stride
-    #     shift_y = np.arange(0, height) * _feat_stride
-    #     shift_x, shift_y = np.meshgrid(shift_x, shift_y)
-    #     shifts = np.vstack((shift_x.ravel(), shift_y.ravel(),
-    #                         shift_x.ravel(), shift_y.ravel())).transpose()
+        # Enumerate all shifts
+        shift_x = np.arange(0, width) * _feat_stride
+        shift_y = np.arange(0, height) * _feat_stride
+        shift_x, shift_y = np.meshgrid(shift_x, shift_y)
+        shifts = np.vstack((shift_x.ravel(), shift_y.ravel(),
+                            shift_x.ravel(), shift_y.ravel())).transpose()
+        
+        print 'done till #73'
 
     #     # Enumerate all shifted anchors:
     #     #
