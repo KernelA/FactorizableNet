@@ -158,8 +158,9 @@ class RPN(nn.Module):
                     _feat_stride, opts, anchor_scales, anchor_ratios, mappings):
         print 'hello from proposal_layer() in RPN.py'
         rpn_cls_prob_reshape = rpn_cls_prob_reshape.data.cpu().numpy()
-        # rpn_bbox_pred = rpn_bbox_pred.data.cpu().numpy()
-        # x = proposal_layer_py(rpn_cls_prob_reshape, rpn_bbox_pred, im_info,
-        #             _feat_stride, opts, anchor_scales, anchor_ratios, mappings)
+        rpn_bbox_pred = rpn_bbox_pred.data.cpu().numpy()
+        print 'done till #162 in RPN.py'
+        x = proposal_layer_py(rpn_cls_prob_reshape, rpn_bbox_pred, im_info,
+                    _feat_stride, opts, anchor_scales, anchor_ratios, mappings)
         # x = network.np_to_variable(x, is_cuda=True)
         # return x.view(-1, 6)
