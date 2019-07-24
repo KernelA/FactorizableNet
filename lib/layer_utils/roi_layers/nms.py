@@ -2,8 +2,8 @@
 # from ._utils import _C
 from layer_utils import _C
 
-# nms = _C.nms
-nms = None
+nms = _C.nms
+# nms = None
 # nms.__doc__ = """
 # This function performs Non-maximum suppresion"""
 
