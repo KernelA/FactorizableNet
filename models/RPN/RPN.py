@@ -112,7 +112,10 @@ class RPN(nn.Module):
 
         # proposal layer
         cfg_key = 'train' if self.training else 'test'
-        print 'done till #114 in RPN.py'
+        print 'done till #114 in RPN.py'  # true
+
+        self.proposal_layer(None, None, None, None, None, None, None, None)
+
         # rois = self.proposal_layer(rpn_cls_prob_reshape, rpn_bbox_pred, im_info,
         #                            self._feat_stride, self.opts['object'][cfg_key],
         #                            self.opts['object']['anchor_scales'],
