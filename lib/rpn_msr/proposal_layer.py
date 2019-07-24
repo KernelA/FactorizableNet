@@ -104,33 +104,35 @@ def proposal_layer(rpn_cls_prob_reshape, rpn_bbox_pred, im_infos,
         # Convert anchors into proposals via bbox transformations
         proposals = bbox_transform_inv(anchors, bbox_deltas)
 
-        print 'done till #105'
+        print 'done till #105'  # true
 
-    #     # 2. clip predicted boxes to image
-    #     if opts['dropout_box_runoff_image']:
-    #         _allowed_border = 16
-    #         inds_inside = np.where(
-    #             (proposals[:, 0] >= -_allowed_border) &
-    #             (proposals[:, 1] >= -_allowed_border) &
-    #             (proposals[:, 2] < im_info[1] + _allowed_border) &  # width
-    #             (proposals[:, 3] < im_info[0] + _allowed_border)  # height
-    #         )[0]
-    #         proposals = proposals[inds_inside, :]
-    #     proposals = clip_boxes(proposals, im_info[:2])
+        # 2. clip predicted boxes to image
+        if opts['dropout_box_runoff_image']:
+            _allowed_border = 16
+            inds_inside = np.where(
+                (proposals[:, 0] >= -_allowed_border) &
+                (proposals[:, 1] >= -_allowed_border) &
+                (proposals[:, 2] < im_info[1] + _allowed_border) &  # width
+                (proposals[:, 3] < im_info[0] + _allowed_border)  # height
+            )[0]
+            proposals = proposals[inds_inside, :]
+        proposals = clip_boxes(proposals, im_info[:2])
 
-    #     # 3. remove predicted boxes with either height or width < threshold
-    #     # (NOTE: convert min_size to input image scale stored in im_info[2])
-    #     keep = _filter_boxes(proposals, min_size * im_info[2])
-    #     proposals = proposals[keep, :]
-    #     scores = scores[keep]
+        # 3. remove predicted boxes with either height or width < threshold
+        # (NOTE: convert min_size to input image scale stored in im_info[2])
+        keep = _filter_boxes(proposals, min_size * im_info[2])
+        proposals = proposals[keep, :]
+        scores = scores[keep]
 
-    #     # 4. sort all (proposal, score) pairs by score from highest to lowest
-    #     # 5. take top pre_nms_topN (e.g. 6000)
-    #     order = scores.ravel().argsort()[::-1]
-    #     if pre_nms_topN > 0:
-    #         order = order[:pre_nms_topN]
-    #     proposals = proposals[order, :]
-    #     scores = scores[order]
+        # 4. sort all (proposal, score) pairs by score from highest to lowest
+        # 5. take top pre_nms_topN (e.g. 6000)
+        order = scores.ravel().argsort()[::-1]
+        if pre_nms_topN > 0:
+            order = order[:pre_nms_topN]
+        proposals = proposals[order, :]
+        scores = scores[order]
+
+        print 'done till #134'
 
     #     # 6. apply nms (e.g. threshold = 0.7)
     #     # 7. take after_nms_topN (e.g. 300)
