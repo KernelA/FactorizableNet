@@ -107,6 +107,8 @@ class RPN(nn.Module):
         rpn_bbox_pred = self.bbox_conv(rpn_conv1)
         # print 'rpn_bbox_pred.std()', rpn_bbox_pred.data.std() * 4
 
+        print 'done till #108 in RPN.py'
+
 
         # # proposal layer
         # cfg_key = 'train' if self.training else 'test'
