@@ -1,0 +1,113 @@
+test
+## args
+{'MPS_iter': None,
+ 'clip_gradient': True,
+ 'dataset_option': None,
+ 'dir_logs': None,
+ 'dropout': None,
+ 'epochs': None,
+ 'eval_epochs': 1,
+ 'evaluate': True,
+ 'evaluate_object': False,
+ 'infinite': False,
+ 'iter_size': 1,
+ 'learning_rate': None,
+ 'loss_weight': True,
+ 'model_name': None,
+ 'nms': -1.0,
+ 'optimize_MPS': False,
+ 'optimizer': None,
+ 'path_opt': 'options/models/VRD.yaml',
+ 'pretrained_model': 'output/trained_models/Model-VRD.h5',
+ 'print_freq': 1000,
+ 'resume': None,
+ 'rpn': None,
+ 'save_all_from': None,
+ 'seed': 1,
+ 'start_epoch': 0,
+ 'step_size': None,
+ 'triplet_nms': 0.4,
+ 'use_gt_boxes': False,
+ 'use_normal_anchors': False,
+ 'warm_iters': -1,
+ 'workers': 1}
+## options
+{'data': {'batch_size': 1L,
+          'dataset': 'VRD',
+          'dataset_version': None,
+          'opts': 'options/data_VRD.yaml',
+          'use_region': False},
+ 'logs': {'dir_logs': 'output/', 'model_name': 'FN_VRD'},
+ 'model': {'MPS_iter': 1,
+           'activation': 'relu',
+           'arch': 'FN_v4s',
+           'bottleneck': True,
+           'cls_obj': 1.0,
+           'cls_pred': 2.0,
+           'dim_ho': 512,
+           'dim_hp': 512,
+           'dim_hr': 512,
+           'dim_mm': 256,
+           'dropout': 0.0,
+           'fusion': 'PI_v5',
+           'op': 'Sum',
+           'pool_size': 5,
+           'reg_obj': 0.5,
+           'rpn_opts': 'options/RPN/RPN_FN_VRD.yaml',
+           'use_bias': True,
+           'use_loss_weight': True},
+ 'optim': {'clip_gradient': True,
+           'epochs': 15,
+           'lr': 0.01,
+           'lr_decay': 0.1,
+           'lr_decay_epoch': 3,
+           'momentum': 0.9,
+           'nesterov': True,
+           'optimizer': 0,
+           'weight_decay': 1e-05},
+ 'opts': {'dir': 'data/VRD',
+          'test': {'MAX_SIZE': 1000, 'SCALES': [600]},
+          'train': {'MAX_SIZE': 1000,
+                    'SCALES': [450, 500, 550, 600, 600, 650, 700, 750]}}}
+Checkpoints are saved to: output/FN_VRD_1_iters_SGD
+Loading training set and testing set... #################### MY DEBUG SECTION start ####################
+len of test_set: 954
+
+traverse test_set start
+traverse test_set done
+options['data']['dataset'] VRD
+data_opts
+{'dir': 'data/VRD',
+ 'test': {'MAX_SIZE': 1000, 'SCALES': [600]},
+ 'train': {'MAX_SIZE': 1000,
+           'SCALES': [450, 500, 550, 600, 600, 650, 700, 750]}}
+dataset_option = None
+use_region = False
+#################### MY DEBUG SECTION  end  ####################
+Done
+hello from RPN.py init()
+using k-means anchors: data/VRD/kmeans_anchors.json
+1 MPS modules are used.
+Bottleneck enabled.
+Done.
+vgg feature length: 26
+rpn feature length: 6
+HDN feature length: 37
+MPS feature length: 20
+Logs directory already exists in output/FN_VRD_1_iters_SGD. Erase?
+Loading pretrained model: output/trained_models/Model-VRD.h5
+Model has 32954137 parameters
+========== Testing =======
+eval done
+0
+hello
+(<class 'torch.Tensor'>, <type 'list'>)
+hello from fn_v4s forward_eval()
+hello from RPN.py forward
+done till #108 in RPN.py
+done till #114 in RPN.py
+done till #117 in RPN.py
+parameters no problem
+hello from proposal_layer() in RPN.py
+done till #162 in RPN.py
+hello from proposal_layer.py

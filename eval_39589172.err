@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "train_FN.py", line 428, in <module>
+    main()
+  File "train_FN.py", line 307, in main
+    use_gt_boxes=args.use_gt_boxes)
+  File "/home/kangliwei/SceneGraph/FactorizableNet/models/HDN_v2/engines_v1.py", line 143, in test
+    use_gt_boxes=use_gt_boxes)
+  File "/home/kangliwei/SceneGraph/FactorizableNet/models/HDN_v2/factorizable_network_v4.py", line 283, in evaluate
+    object_result, predicate_result = self.forward_eval(im_data, im_info,)
+  File "/home/kangliwei/SceneGraph/FactorizableNet/models/HDN_v2/factorizable_network_v4s.py", line 136, in forward_eval
+    features, object_rois, _ = self.rpn(im_data, im_info)
+  File "/home/kangliwei/anaconda2/envs/sg/lib/python2.7/site-packages/torch/nn/modules/module.py", line 489, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/kangliwei/SceneGraph/FactorizableNet/models/RPN/RPN.py", line 153, in forward
+    return features, rois, losses
+NameError: global name 'losses' is not defined
+srun: error: c37a-s36: task 0: Exited with exit code 1
