@@ -64,7 +64,7 @@ class Factorizable_network(nn.Module):
         self.loss_reg_obj = None
 
         with open(opts['rpn_opts'], 'r') as f:
-            self.rpn_opts = yaml.load(f)
+            self.rpn_opts = yaml.load(f, Loader=yaml.FullLoader)
             assert len(trainset.opts['test']['SCALES']) == 1, "Currently only support single testing scale."
             self.rpn_opts['scale'] = trainset.opts['test']['SCALES'][0]
 

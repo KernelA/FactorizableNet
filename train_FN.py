@@ -129,10 +129,10 @@ def main():
 
     if args.path_opt is not None:
         with open(args.path_opt, 'r') as handle:
-            options_yaml = yaml.load(handle)
+            options_yaml = yaml.load(handle, Loader=yaml.FullLoader)
         options = utils.update_values(options, options_yaml)
         with open(options['data']['opts'], 'r') as f:
-            data_opts = yaml.load(f)
+            data_opts = yaml.load(f, Loader=yaml.FullLoader)
             options['data']['dataset_version'] = data_opts.get('dataset_version', None)
             options['opts'] = data_opts
 

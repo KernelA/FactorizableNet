@@ -44,12 +44,12 @@ def main():
     global args
     print "Loading training set and testing set..."
     with open(args.path_data_opts, 'r') as f:
-        data_opts = yaml.load(f)
+        data_opts = yaml.load(f, Loader=yaml.FullLoader)
     train_set = VRD(data_opts, 'train', batch_size=args.batch_size)
     test_set = VRD(data_opts, 'test', batch_size=args.batch_size)
     print "Done."
     with open(args.path_rpn_opts, 'r') as f:
-        opts = yaml.load(f)
+        opts = yaml.load(f, Loader=yaml.FullLoader)
         opts['scale'] = train_set.opts['test']['SCALES'][0]
         print('scale: {}'.format(opts['scale']))
 

@@ -46,7 +46,7 @@ def main():
     global args
     print "Loading training set and testing set..."
     with open(args.path_data_opts, 'r') as f:
-        data_opts = yaml.load(f)
+        data_opts = yaml.load(f, Loader=yaml.FullLoader)
     args.model_name += '_' + data_opts['dataset_version'] + '_' + args.dataset_option
     train_set = visual_genome(data_opts, 'train', dataset_option=args.dataset_option,
                                 batch_size=args.batch_size, use_region=True)
@@ -55,7 +55,7 @@ def main():
     print "Done."
 
     with open(args.path_rpn_opts, 'r') as f:
-        opts = yaml.load(f)
+        opts = yaml.load(f, Loader=yaml.FullLoader)
         opts['scale'] = train_set.opts['test']['SCALES'][0]
     net = RPN(opts)
 
