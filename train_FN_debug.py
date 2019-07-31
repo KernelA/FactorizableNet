@@ -33,38 +33,38 @@ import pdb
 
 class arg():
     def __init__(self):
-        self.path_opt = 'options/FN_v4/map_v2.yaml',
-        self.dir_logs = None,
-        self.model_name = None, 
-        self.dataset_option = None, 
-        self.batch_size = None, 
-        self.workers = 1, 
-        self.lr = None, 
-        self.learning_rate = None, 
-        self.epochs = None, 
-        self.eval_epochs = 1, 
-        self.print_freq = 1000, 
-        self.step_size = None, 
-        self.optimizer = None, 
-        self.infinite = False, 
-        self.iter_size = 1, 
-        self.loss_weight = True, 
-        self.clip_gradient = True, 
-        self.MPS_iter = None, 
-        self.dropout = None, 
-        self.resume = None, 
-        self.pretrained_model = None, 
-        self.warm_iters = -1, 
-        self.optimize_MPS = False, 
-        self.start_epoch = 0, 
-        self.save_all_from = None, 
-        self.evaluate = False, 
-        self.evaluate_object = False, 
-        self.use_normal_anchors = False, 
-        self.seed = 1, 
-        self.rpn = None, 
-        self.nms = -1, 
-        self.triplet_nms = 0.4, 
+        self.path_opt = 'options/models/VRD.yaml'
+        self.dir_logs = None
+        self.model_name = None
+        self.dataset_option = None
+        self.batch_size = None
+        self.workers = 1
+        self.lr = None
+        self.learning_rate = None
+        self.epochs = None
+        self.eval_epochs = 1
+        self.print_freq = 1000
+        self.step_size = None
+        self.optimizer = None
+        self.infinite = False
+        self.iter_size = 1
+        self.loss_weight = True
+        self.clip_gradient = True
+        self.MPS_iter = None
+        self.dropout = None
+        self.resume = None
+        self.pretrained_model = 'output/trained_models/Model-VRD.h5'
+        self.warm_iters = -1
+        self.optimize_MPS = False
+        self.start_epoch = 0
+        self.save_all_from = None
+        self.evaluate = True
+        self.evaluate_object = False
+        self.use_normal_anchors = False
+        self.seed = 1
+        self.rpn = None
+        self.nms = -1
+        self.triplet_nms = 0.4
         self.use_gt_boxes = False
 
 args = arg()
@@ -102,9 +102,42 @@ options = {
     },
 }
 
+if args.path_opt is not None:
+    # with open(args.path_opt, 'r') as handle:
+    handle = open(args.path_opt, 'r')
+    options_yaml = yaml.load(handle, Loader=yaml.FullLoader)
+    handle.close()
+    options = utils.update_values(options, options_yaml)
+    # with open(options['data']['opts'], 'r') as f:
+    f = open(options['data']['opts'], 'r')
+    data_opts = yaml.load(f, Loader=yaml.FullLoader)
+    options['data']['dataset_version'] = data_opts.get('dataset_version', None)
+    options['opts'] = data_opts
+    f.close()
 
-
-print '## args'
-pprint(vars(args))
 print '## options'
 pprint(options)
+
+lr = options['optim']['lr']
+options = get_model_name(options)
+print 'Checkpoints are saved to: {}'.format(options['logs']['dir_logs'])
+
+train_set = getattr(datasets, options['data']['dataset'])(data_opts, 'train',
+                            dataset_option=options['data'].get('dataset_option', None),
+                            batch_size=options['data']['batch_size'],
+                            use_region=options['data'].get('use_region', False))
+
+test_set = getattr(datasets, options['data']['dataset'])(data_opts, 'test',
+                            dataset_option=options['data'].get('dataset_option', None),
+                            batch_size=options['data']['batch_size'],
+                            use_region=options['data'].get('use_region', False))
+
+
+model = getattr(models, options['model']['arch'])(train_set, opts = options['model'])
+
+# pass enough message for anchor target generation
+train_set._feat_stride = model.rpn._feat_stride
+train_set._rpn_opts = model.rpn.opts
+
+for key in train_set[0].keys():
+    print(key + ' : ' + str(type(trainset[0][key])))
