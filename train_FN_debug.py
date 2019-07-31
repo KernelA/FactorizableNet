@@ -140,4 +140,4 @@ train_set._feat_stride = model.rpn._feat_stride
 train_set._rpn_opts = model.rpn.opts
 
 for key in train_set[0].keys():
-    print(key + ' : ' + str(type(trainset[0][key])))
+    print(key + ' : ' + str(type(train_set[0][key])))
