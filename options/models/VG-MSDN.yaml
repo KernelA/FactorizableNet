@@ -21,7 +21,7 @@ model:
     dim_mm: 256
     activation: relu
     # Iters for message passing, 0 means disable that
-    MPS_iter: 1
+    MPS_iter: 2
     # settings for attention gate
     use_bias: True
     dropout: 0.
