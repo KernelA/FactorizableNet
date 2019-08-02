@@ -31,6 +31,9 @@ from models.modules.dataParallel import DataParallel
 
 import pdb
 
+from torch.autograd import Variable
+from lib.network import np_to_variable 
+
 class arg():
     def __init__(self):
         self.path_opt = 'options/models/VRD.yaml'
@@ -134,10 +137,36 @@ test_set = getattr(datasets, options['data']['dataset'])(data_opts, 'test',
 
 
 model = getattr(models, options['model']['arch'])(train_set, opts = options['model'])
+model.cuda()
 
 # pass enough message for anchor target generation
 train_set._feat_stride = model.rpn._feat_stride
 train_set._rpn_opts = model.rpn.opts
 
+train_loader = torch.utils.data.DataLoader(train_set, batch_size=options['data']['batch_size'],
+                                            shuffle=True, num_workers=args.workers,
+                                            pin_memory=True,
+                                            collate_fn=getattr(datasets, options['data']['dataset']).collate)
+test_loader = torch.utils.data.DataLoader(test_set, batch_size=options['data']['batch_size'],
+                                            shuffle=False, num_workers=args.workers,
+                                            pin_memory=True,
+                                            collate_fn=getattr(datasets, options['data']['dataset']).collate)
+
 for key in train_set[0].keys():
     print(key + ' : ' + str(type(train_set[0][key])))
+
+for sample in train_loader:
+    break
+
+input_visual = Variable(sample['visual'].cuda())
+target_objects = sample['objects']
+target_relations = sample['relations']
+image_info = sample['image_info']
+rpn_anchor_targets_obj = [
+        np_to_variable(sample['rpn_targets']['object'][0],is_cuda=True, dtype=torch.LongTensor),
+        np_to_variable(sample['rpn_targets']['object'][1],is_cuda=True),
+        np_to_variable(sample['rpn_targets']['object'][2],is_cuda=True),
+        np_to_variable(sample['rpn_targets']['object'][3],is_cuda=True)
+        ]
+
+losses = model(input_visual, image_info, target_objects, target_relations, rpn_anchor_targets_obj)
