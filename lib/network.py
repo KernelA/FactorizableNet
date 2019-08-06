@@ -80,7 +80,7 @@ def load_net(fname, net):
                 param = torch.from_numpy(np.asarray(h5f[k]))
                 v.copy_(param)
                 #print '[Copied]: {}'.format(k)
-            else if 'mps_list' in k:
+            elif 'mps_list' in k:
                 lst = k.split('.')
                 lst[1] = '0'
                 k = '.'.join(lst)
