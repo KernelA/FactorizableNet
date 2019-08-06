@@ -75,6 +75,8 @@ def load_net(fname, net):
     for k, v in net.state_dict().items():
         try:
             if k in h5f:
+                print(type(k))
+                print('param name: %s' % str(k))
                 param = torch.from_numpy(np.asarray(h5f[k]))
                 v.copy_(param)
                 #print '[Copied]: {}'.format(k)
