@@ -132,7 +132,7 @@ def test(loader, model, top_Ns, nms=-1., triplet_nms=-1., use_gt_boxes=False):
         max_region_rois_num = cnt_correct_t[3] if cnt_correct_t[3] > max_region_rois_num else max_region_rois_num
         batch_time.update(time.time() - end)
         end = time.time()
-        if (i + 1) % print_freq == 0 and i > 0:
+        if (i + 1) % 1 == 0 and i > 0:
             print('[Evaluation][%d/%d][%.2fs/img][avg: %d subgraphs, max: %d subgraphs]' %(i+1, len(loader), batch_time.avg, total_region_rois_num / float(i+1), max_region_rois_num))
             for idx, top_N in enumerate(top_Ns):
                 print('\tTop-%d Recall:\t[Pred] %2.3f%%\t[Phr] %2.3f%%\t[Rel] %2.3f%%' % (
