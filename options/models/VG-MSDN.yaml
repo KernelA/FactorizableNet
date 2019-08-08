@@ -16,12 +16,12 @@ model:
     dim_hp: 512
     use_shortcut: True
     pool_size: 7
-    op: Sum
+    op: Sum_Prod
     # for both kernel-based attention and Mutan
     dim_mm: 256
     activation: relu
     # Iters for message passing, 0 means disable that
-    MPS_iter: 2
+    MPS_iter: 1
     # settings for attention gate
     use_bias: True
     dropout: 0.
