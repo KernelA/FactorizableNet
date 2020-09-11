@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import os
 import os.path as osp
 import torch
 import torch.nn as nn
@@ -123,7 +124,9 @@ class RPN(nn.Module):
                                    self.opts['object']['anchor_ratios'],
                                    self.opts['mappings'])
 
-        f = open('/home/kangliwei/test/RPN_proposal_layer_parameters.pkl', 'wb')
+        file_path = '/home/kangliwei/test/RPN_proposal_layer_parameters.pkl'
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        f = open(file_path, 'wb')
         pickle.dump(a, f)
         f.close()
 
