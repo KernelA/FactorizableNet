@@ -125,7 +125,8 @@ class RPN(nn.Module):
                                    self.opts['mappings'])
 
         file_path = '/home/kangliwei/test/RPN_proposal_layer_parameters.pkl'
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        if not os.path.exists(os.path.dirname(file_path)):
+            os.makedirs(os.path.dirname(file_path))
         f = open(file_path, 'wb')
         pickle.dump(a, f)
         f.close()
