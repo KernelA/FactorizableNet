@@ -154,7 +154,7 @@ class RPN(nn.Module):
         #         'bg_cnt': bg_cnt,
 
         #     }
-        return features, rois, losses
+        return features, rois
 
 
     @staticmethod
@@ -166,5 +166,5 @@ class RPN(nn.Module):
         print 'done till #162 in RPN.py'
         x = proposal_layer_py(rpn_cls_prob_reshape, rpn_bbox_pred, im_info,
                     _feat_stride, opts, anchor_scales, anchor_ratios, mappings)
-        # x = network.np_to_variable(x, is_cuda=True)
-        # return x.view(-1, 6)
+        x = network.np_to_variable(x, is_cuda=True)
+        return x.view(-1, 6)
